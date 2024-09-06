@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MVC_Project_BLL.Repositories
 {
-    internal class DepartmentRepository : IDepartmentRepository
+    public class DepartmentRepository : IDepartmentRepository
     {
         private readonly AppDbContext _dbContext; //NULL
         public DepartmentRepository(AppDbContext dbContext) // ASK CLR For Creating object
