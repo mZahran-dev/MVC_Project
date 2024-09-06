@@ -1,4 +1,6 @@
-﻿using MVC_Project_BLL.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using MVC_Project_BLL.Interfaces;
+using MVC_Project_DAL.Data;
 using MVC_Project_DAL.Models;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,11 @@ namespace MVC_Project_BLL.Repositories
 {
     internal class DepartmentRepository : IDepartmentRepository
     {
+        private readonly AppDbContext _dbContext; //NULL
+        public DepartmentRepository(AppDbContext dbContext) // ASK CLR For Creating object
+        {
+            _dbContext = dbContext;
+        }
         public int delete(Department department)
         {
             throw new NotImplementedException();
@@ -17,22 +24,27 @@ namespace MVC_Project_BLL.Repositories
 
         public IEnumerable<Department> GetAll()
         {
-            throw new NotImplementedException();
+            return _dbContext.Departments.AsNoTracking().ToList();  
         }
 
         public Department GetById(int id)
         {
-            throw new NotImplementedException();
+            //var department = _dbContext.Departments.Where(D=>D.Id == id).FirstOrDefault();
+
+            // another way but better performance
+            return _dbContext.Departments.Find(id);
         }
 
-        public int insert(Department department)
+        public int Add(Department department)
         {
-            throw new NotImplementedException();
+            _dbContext.Departments.Add(department);
+            return _dbContext.SaveChanges();
         }
 
         public int update(Department department)
         {
-            throw new NotImplementedException();
+            _dbContext.Departments.Update(department);
+            return _dbContext.SaveChanges();
         }
     }
 }

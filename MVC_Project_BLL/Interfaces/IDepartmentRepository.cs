@@ -11,7 +11,7 @@ namespace MVC_Project_BLL.Interfaces
     {
         public IEnumerable<Department> GetAll();
         Department GetById(int id);
-        int insert(Department department);
+        int Add(Department department);
         int update(Department department);
         int delete(Department department);
     }
