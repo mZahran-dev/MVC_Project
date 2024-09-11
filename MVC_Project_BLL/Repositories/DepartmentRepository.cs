@@ -19,7 +19,8 @@ namespace MVC_Project_BLL.Repositories
         }
         public int delete(Department department)
         {
-            throw new NotImplementedException();
+            _dbContext.Departments.Remove(department);
+            return _dbContext.SaveChanges();
         }
 
         public IEnumerable<Department> GetAll()

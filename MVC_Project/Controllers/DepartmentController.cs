@@ -33,6 +33,7 @@ namespace MVC_Project_PL.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(Department department) 
         {
             if (ModelState.IsValid)
@@ -114,5 +115,39 @@ namespace MVC_Project_PL.Controllers
             }
 
         }
+
+
+        [HttpGet]
+        public IActionResult Delete(int? id) 
+        {
+            return Details(id, "Delete");
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(Department department)
+        {
+            try
+            {
+                departmentRepository.delete(department);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                if (env.IsDevelopment())
+                {
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "An Error Occured during Delete Department");
+                }
+               
+            }
+            return View(department);
+        }
+    
+    
     }
 }
