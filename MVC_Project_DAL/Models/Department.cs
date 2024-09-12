@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace MVC_Project_DAL.Models
 {
-    public class Department
+    public class Department : ModelClass
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         [Required(ErrorMessage = "Code is required" )]
         public string Code { get; set; }
         [Required(ErrorMessage = "Name is required")]
