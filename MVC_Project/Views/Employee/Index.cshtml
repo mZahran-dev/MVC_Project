@@ -1,10 +1,10 @@
 ﻿@using MVC_Project_DAL.Models
-@model IEnumerable<Department>
+@model IEnumerable<Employee>
 
-<h1>All Departments</h1>
+<h1>All Employees</h1>
 <br />
 <br />
-<a asp-controller="Department" asp-action="Create" class="btn btn-primary mb-2">Create New Department</a>
+<a asp-controller="Employee" asp-action="Create" class="btn btn-primary mb-2">Create New Employee</a>
 
 
 @if(Model.Count() > 0)
@@ -12,36 +12,30 @@
     <table class="table table-hover table-striped">
         <thead>
             <tr>
-                <th>@Html.DisplayNameFor(D => D.Code)</th>
-                <th>@Html.DisplayNameFor(D => D.Name)</th>
-                <th>@Html.DisplayNameFor(D => D.DateOfCreation)</th>
+                <th>@Html.DisplayNameFor(E => E.Name)</th>
+                <th>@Html.DisplayNameFor(E => E.Address)</th> 
+                <th>@Html.DisplayNameFor(E => E.Age)</th>
+                <th>@Html.DisplayNameFor(E => E.gender)</th>
+                <th>@Html.DisplayNameFor(E => E.Email)</th>
+                <th>@Html.DisplayNameFor(E => E.Salary)</th>
+                <th>@Html.DisplayNameFor(E => E.isActive)</th>
                 <th> Details </th>
                 <th> Update </th>
                 <th> Delete </th>
             </tr>
         </thead>
         <tbody>
-            @foreach(var department in Model)
+            @foreach(var Employee in Model)
             {
                 <tr>
-                    <td>@department.Code</td>
-                    <td>@department.Name</td>
-                    <td>@department.DateOfCreation</td>
-                   <td>
-                        <a asp-action="Details" asp-route-id="@department.Id" class="btn btn-success">
-                            <i class="fas fa-eye"></i> Details
-                        </a>
-                   </td>
-                    <td>
-                        <a  asp-action="Edit" asp-route-id="@department.Id" class="btn btn-warning">
-                            <i class="fas fa-edit"></i> Update
-                        </a>                  
-                    </td>
-                    <td>
-                        <a asp-action="Delete" asp-route-id="@department.Id" class="btn btn-danger">
-                            <i class="fas fa-trash"></i> Delete
-                        </a>
-                    </td>
+                    <td>@Employee.Name</td>
+                    <td>@Employee.Address</td>
+                    <td>@Employee.Age</td>
+                    <td>@Html.DisplayFor(E => Employee.gender)</td>
+                    <td>@Html.DisplayFor(E => Employee.Email)</td>
+                    <td>@Html.DisplayFor(E => Employee.Salary)</td>
+                    <td>@Html.DisplayFor(E => Employee.isActive)</td>
+                    <partial name="_ButtonsPartial" model="@Employee.Id"></partial>
                 </tr>   
             }
         </tbody>
@@ -51,6 +45,6 @@
 else
 {
     <div class="mt-5 alert alert-warning"> 
-        <h3>there is no department</h3>
+        <h3>there is no Employee</h3>
     </div>
 }

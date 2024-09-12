@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 
 namespace MVC_Project_BLL.Repositories
 {
-    public class DepartmentRepository : GenericRepository<Department>
+    public class DepartmentRepository : GenericRepository<Department>, IDepartmentRepository
+
     {
         //private readonly AppDbContext dbContext;
         public DepartmentRepository(AppDbContext _dbContext) :base(_dbContext)

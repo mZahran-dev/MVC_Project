@@ -35,6 +35,7 @@ namespace MVC_Project_PL.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(Employee employee)
         {
             if (ModelState.IsValid)
@@ -43,7 +44,7 @@ namespace MVC_Project_PL.Controllers
                 var count = employeeRepository.Add(employee);
                 if (count > 0)
                 {
-                    return View(employee);
+                    return RedirectToAction(nameof(Index));
                 }
             }
             return View(employee);

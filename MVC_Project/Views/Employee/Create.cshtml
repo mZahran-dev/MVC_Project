@@ -1,35 +1,25 @@
 ﻿
-@model Department
+@model Employee
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create Department</h1>
+<h1>Create Employee</h1>
 <br />
 <br />
 <form asp-action="Create">
-    <div>
-        @* Code Input *@
-        <div>
-            <label class="col-form-label" asp-for="Code"></label>
-            <input type="text" asp-for="Code" class="form-control" />
-            <span asp-validation-for="Code" class="text-danger"></span>
-        </div>
-        @* Name Input *@
-        <div>
-            <label class="col-form-label" asp-for="Name"></label>
-            <input type="text" asp-for="Name" class="form-control" />
-            <span asp-validation-for="Code" class="text-danger"></span>
-        </div>
-
-        @* Date of creation *@
-        <div>
-            <label class="col-form-label" asp-for="DateOfCreation"></label>
-            <input asp-for="DateOfCreation" class="form-control" />
-        </div>
-           
-    </div>
+    <partial name="PartialViews/CreateEditEmployeePartial"></partial>
     <input type="submit" value="Create" class="btn btn-primary mt-4" />
     <a asp-action="index" class="btn btn-light mt-4">Back To List</a>
+
 </form>
 
+
+@section ValidateSection
+{
+    @* <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+ *@
+
+    <partial name="_ValidationScriptsPartial"></partial>
+}
