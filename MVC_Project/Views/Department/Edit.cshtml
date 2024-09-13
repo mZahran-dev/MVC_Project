@@ -9,27 +9,7 @@
 <form asp-action="Edit">
     @* Log Exception for Validation on properties *@
     <div asp-validation-summary="ModelOnly"> </div>
-    <div>
-        @* Code Input *@
-        <div>
-            <label class="col-form-label" asp-for="Code"></label>
-            <input type="text" asp-for="Code" class="form-control" />
-            <span asp-validation-for="Code" class="text-danger"></span>
-        </div>
-        @* Name Input *@
-        <div>
-            <label class="col-form-label" asp-for="Name"></label>
-            <input type="text" asp-for="Name" class="form-control" />
-            <span asp-validation-for="Code" class="text-danger"></span>
-        </div>
-
-        @* Date of creation *@
-        <div>
-            <label class="col-form-label" asp-for="DateOfCreation"></label>
-            <input asp-for="DateOfCreation" class="form-control" />
-        </div>
-
-    </div>
+    <partial name="PartialViews/CreateEditDepartmentPartial"></partial>
     <input type="submit" value="Save" class="btn btn-primary mt-4" />
     <a asp-action="index" class="btn btn-light mt-4">Back To List</a>
 </form>

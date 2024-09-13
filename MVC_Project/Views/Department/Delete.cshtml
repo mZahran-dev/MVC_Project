@@ -8,21 +8,8 @@
 <br />
 
 <form asp-action="Delete" asp-route-id="@Model.Id">
-    <div>
-        <label class="col-form-label" asp-for="Code"></label>
-        <input type="text" asp-for="Code" class="form-control" readonly />
-
-    </div>
-    <div>
-        <label class="col-form-label" asp-for="Name"></label>
-        <input type="text" asp-for="Name" class="form-control" readonly />
-
-    </div>
-    <div>
-        <label class="col-form-label" asp-for="DateOfCreation"></label>
-        <input asp-for="DateOfCreation" class="form-control" readonly />
-    </div>
-
+   
+    <partial name="PartialViews/DeleteDetailsDepartmentPartial"></partial>
     <input type ="submit" value="Delete" class="btn btn-danger mt-4" />
     <a asp-action="index" class="btn btn-warning mt-4">Cancel</a>
 
