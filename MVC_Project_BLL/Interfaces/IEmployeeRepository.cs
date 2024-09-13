@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace MVC_Project_BLL.Interfaces
 {
-    public interface IDepartmentRepository : IGenericRepository<Department>
+    public interface IEmployeeRepository : IGenericRepository<Employee>
     {
-      
+       IQueryable<Employee> GetEmployeeByAddress(string address);
     }
 }

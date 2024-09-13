@@ -1,15 +1,15 @@
-﻿@model Department
+﻿@model Employee
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit Department</h1>
+<h1>Edit Employee</h1>
 <br />
 <br />
 <form asp-action="Edit">
     @* Log Exception for Validation on properties *@
     <div asp-validation-summary="ModelOnly"> </div>
-    <partial name="PartialViews/CreateEditDepartmentPartial"></partial>
+    <partial name="PartialViews/CreateEditEmployeePartial"></partial>
     <input type="submit" value="Save" class="btn btn-primary mt-4" />
     <a asp-action="index" class="btn btn-light mt-4">Back To List</a>
 </form>
