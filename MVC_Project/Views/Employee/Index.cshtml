@@ -3,9 +3,22 @@
 
 <h1>All Employees</h1>
 <br />
-<br />
-<a asp-controller="Employee" asp-action="Create" class="btn btn-primary mb-2">Create New Employee</a>
+<a asp-controller="Employee" asp-action="Create" class="btn btn-success mb-4">Add New Employee</a>
 
+
+<div class="row justify-content-center align-items-center mt-4 mb-3">
+
+    <form class="row col-8 offset-2" asp-action="Index">
+        <div class="col-8">
+            <input type="text" class="form-control" name="SearchInput" placeholder="Search By Name" />
+        </div>
+        <div>
+            <input type="submit" value="Search" class="btn btn-success" />
+        </div>
+    </form>
+
+
+</div>
 
 @if(Model.Count() > 0)
 {
@@ -26,9 +39,9 @@
             </tr>
         </thead>
         <tbody>
-            @foreach(var Employee in Model)
+             @foreach(var Employee in Model)
             {
-                <tr>
+                <tr>          
                     <td>@Employee.Name</td>
                     <td>@Employee.department?.Name</td>
                     <td>@Employee.Address</td>
@@ -36,10 +49,10 @@
                     <td>@Html.DisplayFor(E => Employee.gender)</td>
                     <td>@Html.DisplayFor(E => Employee.Email)</td>
                     <td>@Html.DisplayFor(E => Employee.Salary)</td>
-                    <td>@Html.DisplayFor(E => Employee.isActive)</td>
-                    <partial name="_ButtonsPartial" model="@Employee.Id"></partial>
+                    <td>@Html.DisplayFor(E => Employee.isActive)</td> 
+                   <partial name="_ButtonsPartial" model="@Employee.Id"></partial>
                 </tr>   
-            }
+            } 
         </tbody>
     </table>
 }
@@ -50,3 +63,6 @@ else
         <h3>there is no Employee</h3>
     </div>
 }
+
+
+@*  JavaScript code to handle the keyup event: *@

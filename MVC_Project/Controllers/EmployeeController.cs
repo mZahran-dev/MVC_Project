@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Razor.Language.Extensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using MVC_Project_BLL.Interfaces;
 using MVC_Project_DAL.Models;
@@ -21,11 +22,20 @@ namespace MVC_Project_PL.Controllers
             _env = env;
         }
 
-        [HttpGet]
-        public IActionResult Index()
+        //[HttpGet]
+        public IActionResult Index(string SearchInput)
         {
-            var emp = employeeRepository.GetAll();
-            return View(emp);
+            if (string.IsNullOrEmpty(SearchInput))
+            {
+                var emp = employeeRepository.GetAll();
+                return View(emp);
+            }
+            else
+            {
+                var employee =  employeeRepository.GetEmployeeByName(SearchInput);
+                return View(employee);
+            }
+           
         }
 
         #region Create Action
@@ -142,6 +152,13 @@ namespace MVC_Project_PL.Controllers
             }
         }
         #endregion
+
+        //public IActionResult Search(string query)
+        //{
+        //    var employees = employeeRepository.GetEmployeeByName(query);
+        //    return PartialView("_EmployeeListPartial", employees);
+        //}
+
 
     }
 }

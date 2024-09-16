@@ -5,17 +5,17 @@
 
 @model int
 <td>
-    <a asp-action="Details" asp-route-id="@Model" class="btn btn-success">
-        <i class="fas fa-eye"></i> Details
+    <a asp-action="Details" asp-route-id="@Model">
+        <i class="fas fa-eye text-success"></i>
     </a>
 </td>
 <td>
-    <a asp-action="Edit" asp-route-id="@Model" class="btn btn-warning">
-        <i class="fas fa-edit"></i> Update
+    <a asp-action="Edit" asp-route-id="@Model">
+        <i class="fas fa-edit text-warning"></i>
     </a>
 </td>
 <td>
-    <a asp-action="Delete" asp-route-id="@Model" class="btn btn-danger">
-        <i class="fas fa-trash"></i> Delete
+    <a asp-action="Delete" asp-route-id="@Model">
+        <i class="fas fa-trash text-danger"></i>
     </a>
 </td>
