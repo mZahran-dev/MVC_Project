@@ -153,12 +153,7 @@ namespace MVC_Project_PL.Controllers
         }
         #endregion
 
-        //public IActionResult Search(string query)
-        //{
-        //    var employees = employeeRepository.GetEmployeeByName(query);
-        //    return PartialView("_EmployeeListPartial", employees);
-        //}
-
+     
 
     }
 }
