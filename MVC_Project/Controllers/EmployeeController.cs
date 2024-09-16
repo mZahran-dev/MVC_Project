@@ -13,6 +13,7 @@ namespace MVC_Project_PL.Controllers
 
         private readonly IEmployeeRepository employeeRepository;
         private readonly IWebHostEnvironment _env;
+        private readonly IDepartmentRepository _departmentRepository;
 
         public EmployeeController(IEmployeeRepository repository,IWebHostEnvironment env)
         {
@@ -31,6 +32,7 @@ namespace MVC_Project_PL.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            //ViewData["Departments"] = _departmentRepository.GetAll();
             return View();
         }
 
