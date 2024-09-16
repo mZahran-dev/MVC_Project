@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Razor.Language.Extensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using MVC_Project_BLL.Interfaces;
 using MVC_Project_DAL.Models;
@@ -13,6 +14,7 @@ namespace MVC_Project_PL.Controllers
 
         private readonly IEmployeeRepository employeeRepository;
         private readonly IWebHostEnvironment _env;
+        private readonly IDepartmentRepository _departmentRepository;
 
         public EmployeeController(IEmployeeRepository repository,IWebHostEnvironment env)
         {
@@ -20,17 +22,27 @@ namespace MVC_Project_PL.Controllers
             _env = env;
         }
 
-        [HttpGet]
-        public IActionResult Index()
+        //[HttpGet]
+        public IActionResult Index(string SearchInput)
         {
-            var emp = employeeRepository.GetAll();
-            return View(emp);
+            if (string.IsNullOrEmpty(SearchInput))
+            {
+                var emp = employeeRepository.GetAll();
+                return View(emp);
+            }
+            else
+            {
+                var employee =  employeeRepository.GetEmployeeByName(SearchInput);
+                return View(employee);
+            }
+           
         }
 
         #region Create Action
         [HttpGet]
         public IActionResult Create()
         {
+            //ViewData["Departments"] = _departmentRepository.GetAll();
             return View();
         }
 
@@ -140,6 +152,8 @@ namespace MVC_Project_PL.Controllers
             }
         }
         #endregion
+
+     
 
     }
 }

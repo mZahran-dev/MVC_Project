@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
@@ -45,5 +46,10 @@ namespace MVC_Project_DAL.Models
         public bool isActive { get; set; }
         public bool IsDeleted { get; set; } //soft Delete 
         public Gender gender { get; set; }
+
+        //navigation property
+        //[InverseProperty(nameof(Models.Department.Employees))]
+        public Department department { get; set; }
+        public int? DepartmentId { get; set; } //FK Column
     }
 }
