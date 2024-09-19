@@ -12,16 +12,21 @@ namespace MVC_Project_PL.Controllers
     public class EmployeeController : Controller
     {
 
+        #region Properties
         private readonly IEmployeeRepository employeeRepository;
         private readonly IWebHostEnvironment _env;
-        private readonly IDepartmentRepository _departmentRepository;
+        private readonly IDepartmentRepository _departmentRepository; 
+        #endregion
 
-        public EmployeeController(IEmployeeRepository repository,IWebHostEnvironment env)
+        #region Constructor
+        public EmployeeController(IEmployeeRepository repository, IWebHostEnvironment env)
         {
             employeeRepository = repository;
             _env = env;
         }
+        #endregion
 
+        #region Index
         //[HttpGet]
         public IActionResult Index(string SearchInput)
         {
@@ -32,11 +37,12 @@ namespace MVC_Project_PL.Controllers
             }
             else
             {
-                var employee =  employeeRepository.GetEmployeeByName(SearchInput);
+                var employee = employeeRepository.GetEmployeeByName(SearchInput);
                 return View(employee);
             }
-           
-        }
+
+        } 
+        #endregion
 
         #region Create Action
         [HttpGet]
@@ -152,7 +158,6 @@ namespace MVC_Project_PL.Controllers
             }
         }
         #endregion
-
      
 
     }
