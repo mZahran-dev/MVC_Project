@@ -132,6 +132,7 @@ namespace MVC_Project_PL.Controllers
             {
                 var mappedEmp = _mapper.Map<EmployeeViewModel, Employee>(employeeVm);
                 _unitOfWork.EmployeeRepository.update(mappedEmp);
+                _unitOfWork.Save();
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -167,6 +168,7 @@ namespace MVC_Project_PL.Controllers
             {      
                 var mappedEmployee = _mapper.Map<EmployeeViewModel, Employee>(employeeVm);
                 _unitOfWork.EmployeeRepository.delete(mappedEmployee);
+                _unitOfWork.Save();
                 return RedirectToAction("Index");
             }
             catch (Exception ex)

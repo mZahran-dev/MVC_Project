@@ -112,6 +112,7 @@ namespace MVC_Project_PL.Controllers
             try
             {
                 _unitOfWork.DepartmentRepository.update(department);
+                _unitOfWork.Save();
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
@@ -150,6 +151,7 @@ namespace MVC_Project_PL.Controllers
             try
             {
                 _unitOfWork.DepartmentRepository.delete(department);
+                _unitOfWork.Save();
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)

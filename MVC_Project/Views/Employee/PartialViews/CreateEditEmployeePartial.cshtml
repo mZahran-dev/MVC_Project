@@ -4,11 +4,11 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @model EmployeeViewModel
-@inject IDepartmentRepository _departmentRepository
+@inject IUnitOfWork _unitOfWork
 
 @{
     //ViewData["Departments"] = _departmentRepository.GetAll();
-    var departments = new SelectList(_departmentRepository.GetAll(),nameof(Department.Id), nameof(Department.Name));
+    var departments = new SelectList(_unitOfWork.DepartmentRepository.GetAll(), nameof(Department.Id), nameof(Department.Name));
 }
 <div>
     @* Name Input *@
