@@ -11,21 +11,31 @@ namespace MVC_Project_PL.Controllers
 {
     public class DepartmentController : Controller
     {
-        private readonly IDepartmentRepository departmentRepository;
+        #region Properties
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment env;
+        //private readonly IDepartmentRepository departmentRepository;
 
-        public DepartmentController(IDepartmentRepository repository, IWebHostEnvironment env) // CLR will Create object
+        #endregion
+
+        #region Constructor
+        public DepartmentController(IUnitOfWork unitOfWork, IWebHostEnvironment env) // CLR will Create object
         {
-            departmentRepository = repository;
+            _unitOfWork = unitOfWork;
             this.env = env;
         }
+        #endregion
+
+        #region Index
         public IActionResult Index()
         {
             // GetAll calling
-            var departmentIndex =  departmentRepository.GetAll();
+            var departmentIndex = _unitOfWork.DepartmentRepository.GetAll();
             return View(departmentIndex);
         }
+        #endregion
 
+        #region Create Action
         [HttpGet]
         public IActionResult Create()
         {
@@ -34,11 +44,12 @@ namespace MVC_Project_PL.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Department department) 
+        public IActionResult Create(Department department)
         {
             if (ModelState.IsValid)
             {
-                var count = departmentRepository.Add(department);
+                _unitOfWork.DepartmentRepository.Add(department);
+                var count = _unitOfWork.Save();
                 if (count > 0)
                 {
                     return RedirectToAction(nameof(Index));
@@ -46,6 +57,10 @@ namespace MVC_Project_PL.Controllers
             }
             return View(department);
         }
+
+        #endregion
+
+        #region Details Action
         [HttpGet]
         public IActionResult Details(int? id, string ViewName = "Details")
         {
@@ -53,14 +68,16 @@ namespace MVC_Project_PL.Controllers
             {
                 return BadRequest();
             }
-            var department = departmentRepository.GetById(id.Value);
+            var department = _unitOfWork.DepartmentRepository.GetById(id.Value);
             if (department == null)
             {
                 return NotFound();
-            } 
-            return View(ViewName,department);
+            }
+            return View(ViewName, department);
         }
+        #endregion
 
+        #region Edit Action
 
         [HttpGet]
         public IActionResult Edit(int? id)
@@ -76,28 +93,28 @@ namespace MVC_Project_PL.Controllers
             //}
             //return View(department);
 
-            return Details(id,"Edit");
+            return Details(id, "Edit");
         }
 
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit([FromRoute]int id, Department department )
+        public IActionResult Edit([FromRoute] int id, Department department)
         {
             if (id != department.Id)
             {
                 return BadRequest();
             }
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return View(department);
 
             try
             {
-                departmentRepository.update(department);
+                _unitOfWork.DepartmentRepository.update(department);
                 return RedirectToAction(nameof(Index));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 // 1. Log Exception
                 // 2. Friendly Message
@@ -115,10 +132,12 @@ namespace MVC_Project_PL.Controllers
             }
 
         }
+        #endregion
 
 
+        #region Delete Action
         [HttpGet]
-        public IActionResult Delete(int? id) 
+        public IActionResult Delete(int? id)
         {
             return Details(id, "Delete");
         }
@@ -130,7 +149,7 @@ namespace MVC_Project_PL.Controllers
         {
             try
             {
-                departmentRepository.delete(department);
+                _unitOfWork.DepartmentRepository.delete(department);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
@@ -143,11 +162,12 @@ namespace MVC_Project_PL.Controllers
                 {
                     ModelState.AddModelError(string.Empty, "An Error Occured during Delete Department");
                 }
-               
+
             }
             return View(department);
-        }
-    
-    
+        } 
+        #endregion
+
+
     }
 }

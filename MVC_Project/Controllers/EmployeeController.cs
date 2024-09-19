@@ -17,17 +17,18 @@ namespace MVC_Project_PL.Controllers
     {
 
         #region Properties
-        private readonly IEmployeeRepository employeeRepository;
+        //private readonly IEmployeeRepository employeeRepository;
         private readonly IWebHostEnvironment _env;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly IDepartmentRepository _departmentRepository; 
+        //private readonly IDepartmentRepository _departmentRepository; 
         #endregion
 
         #region Constructor
-        public EmployeeController(IEmployeeRepository repository, IWebHostEnvironment env, IMapper mapper)
-        {   
-            employeeRepository = repository;
+        public EmployeeController(IUnitOfWork unitOfWork, IWebHostEnvironment env, IMapper mapper)
+        {       
             _env = env;
+           _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
         #endregion
@@ -38,13 +39,13 @@ namespace MVC_Project_PL.Controllers
         {
             if (string.IsNullOrEmpty(SearchInput))
             {
-                var employee = employeeRepository.GetAll();
+                var employee = _unitOfWork.EmployeeRepository.GetAll();
                 var mappedEmp = _mapper.Map<IEnumerable<Employee>,IEnumerable<EmployeeViewModel>>(employee);
                 return View(mappedEmp);
             }
             else
             {
-                var employee = employeeRepository.GetEmployeeByName(SearchInput);
+                var employee = _unitOfWork.EmployeeRepository.GetEmployeeByName(SearchInput);
                 var mappedEmp = _mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeViewModel>>(employee);
                 return View(employee);
             }
@@ -80,7 +81,8 @@ namespace MVC_Project_PL.Controllers
 
                 //};
                 var mappedEmp = _mapper.Map<EmployeeViewModel,Employee>(employeeVm);
-                var count = employeeRepository.Add(mappedEmp);
+                _unitOfWork.EmployeeRepository.Add(mappedEmp);
+                var count = _unitOfWork.Save(); // SaveChanges
                 if (count > 0)
                 {
                     return RedirectToAction(nameof(Index));
@@ -99,7 +101,7 @@ namespace MVC_Project_PL.Controllers
             {
                 return BadRequest();
             }
-            var emp = employeeRepository.GetById(id.Value);
+            var emp = _unitOfWork.EmployeeRepository.GetById(id.Value);
             if (emp == null)
             {
                 return NotFound();
@@ -129,7 +131,7 @@ namespace MVC_Project_PL.Controllers
             try
             {
                 var mappedEmp = _mapper.Map<EmployeeViewModel, Employee>(employeeVm);
-                employeeRepository.update(mappedEmp);
+                _unitOfWork.EmployeeRepository.update(mappedEmp);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -164,7 +166,7 @@ namespace MVC_Project_PL.Controllers
             try
             {      
                 var mappedEmployee = _mapper.Map<EmployeeViewModel, Employee>(employeeVm);
-                employeeRepository.delete(mappedEmployee);
+                _unitOfWork.EmployeeRepository.delete(mappedEmployee);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
