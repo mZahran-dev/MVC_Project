@@ -17,10 +17,10 @@ namespace MVC_Project_BLL.Repositories
         {
             _dbContext = dbContext;
         }
-        public int delete(T item)
+        public void delete(T item)
         {
-            _dbContext.Set<T>().Remove(item);
-            return _dbContext.SaveChanges();
+            _dbContext.Set<T>().Remove(item); //change state to Deleted
+            //return _dbContext.SaveChanges();
         }
 
         public IEnumerable<T> GetAll()
@@ -44,16 +44,16 @@ namespace MVC_Project_BLL.Repositories
             return _dbContext.Set<T>().Find(id);
         }
 
-        public int Add(T item)
+        public void Add(T item)
         {
-            _dbContext.Add(item);
-            return _dbContext.SaveChanges();
+            _dbContext.Add(item);  //change state to Added
+            //return _dbContext.SaveChanges();
         }
 
-        public int update(T item)
+        public void update(T item)
         {
-            _dbContext.Set<T>().Update(item);
-            return _dbContext.SaveChanges();
+            _dbContext.Set<T>().Update(item);  //change state to Modified
+            //return _dbContext.SaveChanges();
         }
     }
 }

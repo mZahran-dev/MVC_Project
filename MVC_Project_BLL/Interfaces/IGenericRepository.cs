@@ -12,8 +12,8 @@ namespace MVC_Project_BLL.Interfaces
     {
         IEnumerable<T> GetAll();
         T GetById(int id);
-        int Add(T item);
-        int update(T item);
-        int delete(T item);
-    }
+        void Add(T item);
+        void update(T item);
+        void delete(T item);
+    }   
 }

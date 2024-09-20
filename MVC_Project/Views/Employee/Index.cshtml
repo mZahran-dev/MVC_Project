@@ -1,11 +1,11 @@
-﻿@using MVC_Project_DAL.Models
-@model IEnumerable<Employee>
+﻿
+@model IEnumerable<EmployeeViewModel>
 
 <h1>All Employees</h1>
 <br />
 <a asp-controller="Employee" asp-action="Create" class="btn btn-success mb-4">Add New Employee</a>
 
-
+@* Seach input *@
 <div class="row justify-content-center align-items-center mt-4 mb-3">
 
     <form class="row col-8 offset-2" asp-action="Index">

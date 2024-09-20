@@ -3,12 +3,12 @@
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@model Employee
-@inject IDepartmentRepository _departmentRepository
+@model EmployeeViewModel
+@inject IUnitOfWork _unitOfWork
 
 @{
     //ViewData["Departments"] = _departmentRepository.GetAll();
-    var departments = new SelectList(_departmentRepository.GetAll(),nameof(Department.Id), nameof(Department.Name));
+    var departments = new SelectList(_unitOfWork.DepartmentRepository.GetAll(), nameof(Department.Id), nameof(Department.Name));
 }
 <div>
     @* Name Input *@
@@ -73,11 +73,16 @@
         <label class="col-form-label" asp-for="IsDeleted"></label>
         <input type="checkbox" asp-for="IsDeleted" class="form-control" />
     </div>
+
     <div class="form-group"> 
         <label class="col-form-label" asp-for="department"  > </label>
          <select class="form-control" asp-items="@departments" asp-for="DepartmentId">
                
          </select>
+    </div>
+    <div>
+        <label class="col-form-label" asp-for="Image"></label>
+        <input class="form-control-file" asp-for="Image" />
     </div>
 
 </div>

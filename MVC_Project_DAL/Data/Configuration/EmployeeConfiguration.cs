@@ -14,6 +14,8 @@ namespace MVC_Project_DAL.Data.Configuration
             (gender) => gender.ToString(),
             (genderAsString) => (Gender)Enum.Parse(typeof(Gender), genderAsString, true)
             );
+            builder.Property(E => E.Name).IsRequired(true).HasMaxLength(50);
+            
              
         }
     }

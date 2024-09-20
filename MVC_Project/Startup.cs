@@ -8,6 +8,8 @@ using Microsoft.Extensions.Hosting;
 using MVC_Project_BLL.Interfaces;
 using MVC_Project_BLL.Repositories;
 using MVC_Project_DAL.Data;
+using MVC_Project_PL.Extentions;
+using MVC_Project_PL.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,10 +33,9 @@ namespace MVC_Project
             services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
-            });
-
-            services.AddScoped<IDepartmentRepository,DepartmentRepository>();
-            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            });      
+            services.AddAutoMapper(M => M.AddProfile(new MappingProfile()));
+            services.AddApplicationServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
