@@ -15,6 +15,9 @@ namespace MVC_Project_BLL.Repositories
         public UnitOfWork(AppDbContext dbContext) // Level of injection
         {
             _dbContext = dbContext;
+            EmployeeRepository = new EmployeeRepository(_dbContext);
+            DepartmentRepository = new DepartmentRepository(_dbContext);
+
         }
         public IEmployeeRepository EmployeeRepository { get; set; } //Null
         public IDepartmentRepository DepartmentRepository { get; set; }
