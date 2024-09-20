@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System;
 using System.Runtime.Serialization;
+using Microsoft.AspNetCore.Http;
 
 namespace MVC_Project_PL.ViewModels
 {
@@ -47,5 +48,7 @@ namespace MVC_Project_PL.ViewModels
         //[InverseProperty(nameof(Models.Department.Employees))]
         public Department department { get; set; }
         public int? DepartmentId { get; set; } //FK Column
+        public IFormFile Image { get; set; }
+        public string ImageName { get; set; }
     }
 }

@@ -39,5 +39,6 @@ namespace MVC_Project_DAL.Models
         //[InverseProperty(nameof(Models.Department.Employees))]
         public Department department { get; set; }
         public int? DepartmentId { get; set; } //FK Column
+        public string ImageName { get; set; }
     }
 }

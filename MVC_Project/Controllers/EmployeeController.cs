@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using MVC_Project_BLL.Interfaces;
 using MVC_Project_DAL.Models;
+using MVC_Project_PL.Helpers;
 using MVC_Project_PL.ViewModels;
 using System;
 using System.Collections;
@@ -80,6 +81,7 @@ namespace MVC_Project_PL.Controllers
                 //    PhoneNumber = employeeVm.PhoneNumber,
 
                 //};
+                employeeVm.ImageName = DocumentSettings.UploadFile(employeeVm.Image, "Images");
                 var mappedEmp = _mapper.Map<EmployeeViewModel,Employee>(employeeVm);
                 _unitOfWork.EmployeeRepository.Add(mappedEmp);
                 var count = _unitOfWork.Save(); // SaveChanges
@@ -130,6 +132,7 @@ namespace MVC_Project_PL.Controllers
 
             try
             {
+                employeeVm.ImageName = DocumentSettings.UploadFile(employeeVm.Image, "Images");
                 var mappedEmp = _mapper.Map<EmployeeViewModel, Employee>(employeeVm);
                 _unitOfWork.EmployeeRepository.update(mappedEmp);
                 _unitOfWork.Save();
@@ -165,7 +168,7 @@ namespace MVC_Project_PL.Controllers
         public IActionResult Delete(EmployeeViewModel employeeVm)
         {
             try
-            {      
+            {
                 var mappedEmployee = _mapper.Map<EmployeeViewModel, Employee>(employeeVm);
                 _unitOfWork.EmployeeRepository.delete(mappedEmployee);
                 _unitOfWork.Save();
