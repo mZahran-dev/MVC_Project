@@ -10,6 +10,7 @@
 <form asp-action="Delete" asp-route-id="@Model.Id">
    
     <partial name="PartialViews/DeleteDetailsEmployeePartial"></partial>
+    <input type="hidden" asp-action="ImageName" />
     <input type ="submit" value="Delete" class="btn btn-danger mt-4" />
     <a asp-action="index" class="btn btn-warning mt-4">Cancel</a>
 

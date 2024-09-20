@@ -172,6 +172,7 @@ namespace MVC_Project_PL.Controllers
                 var mappedEmployee = _mapper.Map<EmployeeViewModel, Employee>(employeeVm);
                 _unitOfWork.EmployeeRepository.delete(mappedEmployee);
                 _unitOfWork.Save();
+                DocumentSettings.DeleteFile(employeeVm.ImageName, "Images");
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
