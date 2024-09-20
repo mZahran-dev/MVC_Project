@@ -11,5 +11,6 @@ namespace MVC_Project_BLL.Interfaces
         public IEmployeeRepository EmployeeRepository { get; set; }
         public IDepartmentRepository DepartmentRepository { get; set; }
         public int Save();
+        
     }
 }

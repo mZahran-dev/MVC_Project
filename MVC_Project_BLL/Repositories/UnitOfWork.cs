@@ -23,5 +23,9 @@ namespace MVC_Project_BLL.Repositories
         {
            return _dbContext.SaveChanges();
         }
+        public void Dispose()
+        {
+            _dbContext.Dispose();
+        }
     }
 }
