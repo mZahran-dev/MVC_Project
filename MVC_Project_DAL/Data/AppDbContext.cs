@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MVC_Project_DAL.Models;
 using System;
@@ -23,6 +24,8 @@ namespace MVC_Project_DAL.Data
         {
             modelBuilder.ApplyConfigurationsFromAssembly(System.Reflection.Assembly.GetExecutingAssembly());
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<IdentityRole>().ToTable("Roles");
+            modelBuilder.Entity<IdentityUser>().ToTable("Users");
         }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Employee> Employees { get; set; }
