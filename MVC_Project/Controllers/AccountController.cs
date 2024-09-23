@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MVC_Project.Controllers;
 using MVC_Project_DAL.Models;
+using MVC_Project_PL.Helpers;
 using MVC_Project_PL.ViewModels;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
@@ -89,12 +90,84 @@ namespace MVC_Project_PL.Controllers
         }
         #endregion
 
-        #region Sing Out
+        #region Sign Out
         public async Task<IActionResult> SignOut()
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction(nameof(SignIn));
         }
+        #endregion
+
+        #region Forget Password
+        [HttpGet]
+        public IActionResult ForgetPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ForgetPassword(ForgetPasswordViewModel forgetPasswordViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(forgetPasswordViewModel.Email);
+                if (user is not null)
+                {
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                    var ResetPasswordUrl = Url.Action("ResetPassword", "Account", new { email = forgetPasswordViewModel.Email,/*token = token*/ });
+                    var email = new Email()
+                    {
+                        Subject = "Reset Your Password",
+                        Receipents = forgetPasswordViewModel.Email,
+                        Body = ResetPasswordUrl
+
+                    };
+                    EmailSettings.SendEmail(email);
+                    return RedirectToAction(nameof(CheckInbox));    
+
+                }
+                ModelState.AddModelError(string.Empty, "Invalid");
+            }
+            return View(forgetPasswordViewModel);
+        }
+
+
+
+        public IActionResult CheckInbox()
+        {
+            return View();
+        }
+        #endregion
+
+        #region Reset Password
+        public IActionResult ResetPassword(string email, string token)
+        {
+            TempData["email"] = email;
+            TempData["token"] = token;
+            return View();
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel resetPasswordViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                string email = TempData["email"] as string;
+                var token = TempData["token"] as string;
+                var user = await _userManager.FindByNameAsync(email);
+                var result = await _userManager.ResetPasswordAsync(user, token, resetPasswordViewModel.NewPassoword);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction(nameof(SignIn));
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+            return View(resetPasswordViewModel);
+        } 
         #endregion
     }
 }
