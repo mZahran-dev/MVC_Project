@@ -49,7 +49,15 @@ namespace MVC_Project
             //    Config.Lockout.MaxFailedAccessAttempts = 3;
             //    Config.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
             //    }    
-            ).AddEntityFrameworkStores<AppDbContext>();
+            ).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+
+            //services.AddAuthentication("Cookies") //Default Schema Token
+            //        .AddCookie("Hamada", Config => 
+            //        {
+            //            Config.LoginPath = "/Account/SignIn";
+            //            Config.AccessDeniedPath = "/Home/Index";
+            //        }); 
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,7 +77,7 @@ namespace MVC_Project
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

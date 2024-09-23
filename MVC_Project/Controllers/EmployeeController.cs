@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Razor.Language.Extensions;
@@ -14,7 +15,8 @@ using System.Collections.Generic;
 
 namespace MVC_Project_PL.Controllers
 {
-    public class EmployeeController : Controller
+	[Authorize]
+	public class EmployeeController : Controller
     {
 
         #region Properties
