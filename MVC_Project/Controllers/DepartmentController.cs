@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Hosting;
@@ -9,6 +10,7 @@ using System;
 
 namespace MVC_Project_PL.Controllers
 {
+    [Authorize]
     public class DepartmentController : Controller
     {
         #region Properties

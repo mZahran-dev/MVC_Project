@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using MVC_Project_BLL.Interfaces;
 using MVC_Project_BLL.Repositories;
 using MVC_Project_DAL.Data;
+using MVC_Project_DAL.Models;
 using MVC_Project_PL.Extentions;
 using MVC_Project_PL.Helpers;
 using System;
@@ -36,6 +38,26 @@ namespace MVC_Project
             });      
             services.AddAutoMapper(M => M.AddProfile(new MappingProfile()));
             services.AddApplicationServices();
+            services.AddIdentity<ApplicationUser,IdentityRole>(
+            //Config => {
+            //    Config.Password.RequiredUniqueChars = 2;
+            //    Config.Password.RequireNonAlphanumeric = true;
+            //    Config.Password.RequiredLength = 128;
+            //    Config.Password.RequireDigit = true;
+            //    Config.Password.RequireLowercase = true;
+            //    Config.Password.RequireUppercase = true;
+            //    Config.Lockout.MaxFailedAccessAttempts = 3;
+            //    Config.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
+            //    }    
+            ).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+
+            //services.AddAuthentication("Cookies") //Default Schema Token
+            //        .AddCookie("Hamada", Config => 
+            //        {
+            //            Config.LoginPath = "/Account/SignIn";
+            //            Config.AccessDeniedPath = "/Home/Index";
+            //        }); 
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,7 +77,7 @@ namespace MVC_Project
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

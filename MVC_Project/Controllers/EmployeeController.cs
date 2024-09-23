@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Razor.Language.Extensions;
@@ -14,7 +15,8 @@ using System.Collections.Generic;
 
 namespace MVC_Project_PL.Controllers
 {
-    public class EmployeeController : Controller
+	[Authorize]
+	public class EmployeeController : Controller
     {
 
         #region Properties
@@ -32,7 +34,7 @@ namespace MVC_Project_PL.Controllers
            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        #endregion
+        #endregion  
 
         #region Index
         //[HttpGet]
@@ -40,15 +42,17 @@ namespace MVC_Project_PL.Controllers
         {
             if (string.IsNullOrEmpty(SearchInput))
             {
-                var employee = _unitOfWork.EmployeeRepository.GetAll();
-                var mappedEmp = _mapper.Map<IEnumerable<Employee>,IEnumerable<EmployeeViewModel>>(employee);
+                var employees = _unitOfWork.EmployeeRepository.GetAll();
+                var mappedEmp = _mapper.Map<IEnumerable<Employee>,IEnumerable<EmployeeViewModel>>(employees);
+                
                 return View(mappedEmp);
             }
             else
             {
-                var employee = _unitOfWork.EmployeeRepository.GetEmployeeByName(SearchInput);
-                var mappedEmp = _mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeViewModel>>(employee);
-                return View(employee);
+                var employees = _unitOfWork.EmployeeRepository.GetEmployeeByName(SearchInput);
+                var mappedEmp = _mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeViewModel>>(employees);
+                
+                return View(mappedEmp);
             }
 
         } 
@@ -108,7 +112,8 @@ namespace MVC_Project_PL.Controllers
             {
                 return NotFound();
             }
-            return View(ViewName, emp);
+            var mappedEmp = _mapper.Map<Employee, EmployeeViewModel>(emp);  
+            return View(ViewName, mappedEmp);
         } 
         #endregion
 
@@ -173,7 +178,7 @@ namespace MVC_Project_PL.Controllers
                 _unitOfWork.EmployeeRepository.delete(mappedEmployee);
                 _unitOfWork.Save();
                 DocumentSettings.DeleteFile(employeeVm.ImageName, "Images");
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {

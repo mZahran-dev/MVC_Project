@@ -1,0 +1,64 @@
+﻿@model IEnumerable<UserViewModel>
+
+<h1>All Users</h1>
+<br />
+<a asp-controller="Employee" asp-action="Create" class="btn btn-success mb-4">Add New User</a>
+
+@* Seach input *@
+<div class="row justify-content-center align-items-center mt-4 mb-3">
+
+    <form class="row col-8 offset-2" asp-action="Index">
+        <div class="col-8">
+            <input type="text" class="form-control" name="SearchInput" placeholder="Search By Name" />
+        </div>
+        <div>
+            <input type="submit" value="Search" class="btn btn-success" />
+        </div>
+    </form>
+
+
+</div>
+
+@if (Model.Count() > 0)
+{
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(U => U.Id)</th>
+                <th>@Html.DisplayNameFor(U => U.Fname)</th>
+                <th>@Html.DisplayNameFor(U => U.Lname)</th>
+                <th>@Html.DisplayNameFor(U => U.Email)</th>
+                <th>@Html.DisplayNameFor(U => U.phoneNumber)</th>
+                <th>@Html.DisplayNameFor(U => U.Roles)</th>
+
+                <th> Details </th>
+                <th> Update </th>
+                <th> Delete </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Users in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(U => Users.Id)</td>
+                    <td>@Html.DisplayFor(U => Users.Fname)</td>
+                    <td>@Html.DisplayFor(U => Users.Lname)</td>
+                    <td>@Html.DisplayFor(U => Users.Email)</td>
+                    <td>@Html.DisplayFor(U => Users.phoneNumber)</td>
+                    <td>@string.Join(" ",Users.Roles)</td>
+                    <partial name="_ButtonsPartial" model="@Users.Id.ToString()"></partial>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+else
+{
+    <div class="mt-5 alert alert-warning">
+        <h3>there is no Employee</h3>
+    </div>
+}
+
+
+@*  JavaScript code to handle the keyup event: *@
