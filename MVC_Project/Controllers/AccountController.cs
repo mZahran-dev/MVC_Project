@@ -88,5 +88,13 @@ namespace MVC_Project_PL.Controllers
             return View(signInViewModel);
         }
         #endregion
+
+        #region Sing Out
+        public async Task<IActionResult> SignOut()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction(nameof(SignIn));
+        }
+        #endregion
     }
 }
