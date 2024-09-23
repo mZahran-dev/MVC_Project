@@ -13,9 +13,9 @@ namespace MVC_Project_PL.Controllers
 	{
 		
 		private readonly UserManager<ApplicationUser> _userManager;
-		private readonly RoleManager<IdentityUser> _roleManager;
+		private readonly RoleManager<IdentityRole> _roleManager;
 
-		public UserController(UserManager<ApplicationUser> userManager, RoleManager<IdentityUser> roleManager)
+		public UserController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
 		{
 			_userManager = userManager;
 			_roleManager = roleManager;

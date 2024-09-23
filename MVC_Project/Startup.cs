@@ -38,7 +38,12 @@ namespace MVC_Project
             });      
             services.AddAutoMapper(M => M.AddProfile(new MappingProfile()));
             services.AddApplicationServices();
-            services.AddIdentity<ApplicationUser,IdentityRole>(
+            
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                   .AddEntityFrameworkStores<AppDbContext>()
+                   .AddDefaultTokenProviders();
+            
+            //services.AddIdentity<ApplicationUser,IdentityRole>(
             //Config => {
             //    Config.Password.RequiredUniqueChars = 2;
             //    Config.Password.RequireNonAlphanumeric = true;
@@ -49,7 +54,7 @@ namespace MVC_Project
             //    Config.Lockout.MaxFailedAccessAttempts = 3;
             //    Config.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
             //    }    
-            ).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+            //).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
             //services.AddAuthentication("Cookies") //Default Schema Token
             //        .AddCookie("Hamada", Config => 
