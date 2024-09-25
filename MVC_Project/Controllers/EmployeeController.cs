@@ -15,7 +15,7 @@ using System.Collections.Generic;
 
 namespace MVC_Project_PL.Controllers
 {
-	[Authorize]
+	//[Authorize]
 	public class EmployeeController : Controller
     {
 
