@@ -1,0 +1,22 @@
+﻿@model UserViewModel
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit User</h1>
+<br />
+<br />
+<form asp-action="Edit" enctype="multipart/form-data">
+    @* Log Exception for Validation on properties *@
+    <div asp-validation-summary="ModelOnly"> </div>
+    <partial name="PartialViews/CreateEditUserPartial"></partial>
+    <input type="submit" value="Save" class="btn btn-primary mt-4" />
+    <a asp-action="index" class="btn btn-light mt-4">Back To List</a>
+</form>
+
+
+@section ValidateSection
+{
+    <partial name="_ValidationScriptsPartial"></partial>
+}

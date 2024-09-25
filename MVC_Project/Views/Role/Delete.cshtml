@@ -1,0 +1,18 @@
+﻿@model RoleViewModel
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Are you sure you want to delete this User ?!</h1>
+<br />
+<br />
+
+<form asp-action="Delete" asp-route-id="@Model.id">
+
+    <partial name="PartialViews/DeleteDetailsRolePartial"></partial>
+    <input type="submit" value="Delete" class="btn btn-danger mt-4" />
+    <a asp-action="Index" class="btn btn-warning mt-4">Cancel</a>
+
+</form>
+
